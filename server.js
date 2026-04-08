@@ -5,6 +5,10 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 connectDB();
 
+// Parse JSON and form-encoded payloads from clients like Postman
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 app.get("/", (req, res) => {
   res.send("App is running!");
 });

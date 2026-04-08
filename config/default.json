@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://endrias123:endrias123@mern-stack.xzebw0r.mongodb.net/?appName=mern-stack"
+  "mongoURI": "mongodb+srv://endrias123:endrias123@mern-stack.xzebw0r.mongodb.net/test?retryWrites=true",
+  "jwtSecret": "mysecrettoken"
 }
