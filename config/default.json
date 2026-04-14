@@ -1,6 +1,0 @@
-{
-  "mongoURI": "mongodb+srv://endrias123:endrias123@mern-stack.xzebw0r.mongodb.net/test?retryWrites=true",
-  "jwtSecret": "mysecrettoken",
-  "githubClientId": "Ov23liOwqVO61R1Vf1uQ",
-  "githubSecret": "a1fc8df679bb0d34e76a2c3025d708b7954b2c7d"
-}
