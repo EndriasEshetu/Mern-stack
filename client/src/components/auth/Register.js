@@ -1,11 +1,13 @@
 import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { setAlert } from "../../actions/alert";
+import { register } from "../../actions/auth";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
-import axios from "axios";
 
-const Register = ({ setAlert }) => {
+const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -14,61 +16,30 @@ const Register = ({ setAlert }) => {
   });
 
   const { name, email, password, password2 } = formData;
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
 
     if (password !== password2) {
       setAlert("Passwords do not match", "danger");
     } else {
-      const newUser = {
-        name,
-        email,
-        password,
-      };
-
-      try {
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
-
-        const body = JSON.stringify(newUser);
-
-        await axios.post("/api/users", body, config);
-        setSuccess("Registration successful. You can now sign in.");
-        setFormData({
-          name: "",
-          email: "",
-          password: "",
-          password2: "",
-        });
-      } catch (err) {
-        const serverMessage =
-          err?.response?.data?.msg ||
-          err?.response?.data?.errors?.[0]?.msg ||
-          "Registration failed. Please try again.";
-        setError(serverMessage);
-      }
+      register({ name, email, password });
     }
   };
+
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   return (
     <Fragment>
       <h1 className="large text-primary">Sign Up</h1>
       <p className="lead">
-        <i className="fas fa-user"></i> Create Your Account
+        <FontAwesomeIcon icon={faUser} /> Create Your Account
       </p>
-      {error && <div className="alert alert-danger">{error}</div>}
-      {success && <div className="alert alert-success">{success}</div>}
       <form className="form" onSubmit={onSubmit}>
         <div className="form-group">
           <input
@@ -127,6 +98,12 @@ const Register = ({ setAlert }) => {
 
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
 };
 
-export default connect(null, { setAlert })(Register);
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { setAlert, register })(Register);

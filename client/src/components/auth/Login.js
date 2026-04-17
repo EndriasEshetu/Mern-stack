@@ -1,73 +1,45 @@
 import React, { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import { Link, Navigate } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { login } from "../../actions/auth";
 
-const Login = () => {
+const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
   const { email, password } = formData;
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
-
-    const newUser = {
-      email,
-      password,
-    };
-
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-
-      const body = JSON.stringify(newUser);
-
-      const res = await axios.post("/api/auth", body, config);
-      if (res?.data?.token) {
-        localStorage.setItem("token", res.data.token);
-      }
-      setSuccess("Login successful.");
-      setFormData({
-        email: "",
-        password: "",
-      });
-    } catch (err) {
-      const serverMessage =
-        err?.response?.data?.msg ||
-        err?.response?.data?.errors?.[0]?.msg ||
-        "Login failed. Please try again.";
-      setError(serverMessage);
-    }
+    login({ email, password });
   };
+
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   return (
     <Fragment>
       <h1 className="large text-primary">Sign In</h1>
       <p className="lead">
-        <i className="fas fa-user"></i> Sign into Your Account
+        <FontAwesomeIcon icon={faUser} /> Sign into Your Account
       </p>
-      {error && <div className="alert alert-danger">{error}</div>}
-      {success && <div className="alert alert-success">{success}</div>}
-      <form className="form" onSubmit={onSubmit}>
+      <form className="form" onSubmit={(e) => onSubmit(e)}>
         <div className="form-group">
           <input
             type="email"
             placeholder="Email Address"
             name="email"
             value={email}
-            onChange={onChange}
+            onChange={(e) => onChange(e)}
             required
           />
         </div>
@@ -77,7 +49,7 @@ const Login = () => {
             placeholder="Password"
             name="password"
             value={password}
-            onChange={onChange}
+            onChange={(e) => onChange(e)}
             minLength="6"
             required
           />
@@ -91,4 +63,13 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+
+export default connect(mapStateToProps, { login })(Login);
