@@ -10,6 +10,7 @@ import PrivateRoute from "./components/routing/PrivateRoute";
 import CreateProfile from "./components/profile-forms/CreateProfile";
 import EditProfile from "./components/profile-forms/EditProfile";
 import AddExperience from "./components/profile-forms/AddExperience";
+import AddEducation from "./components/profile-forms/AddEducation";
 // Redux
 import { Provider } from "react-redux";
 import store from "./store";
@@ -91,6 +92,17 @@ const App = () => {
                   <section className="container">
                     <Alert />
                     <AddExperience />
+                  </section>
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/add-education"
+              element={
+                <PrivateRoute>
+                  <section className="container">
+                    <Alert />
+                    <AddEducation />
                   </section>
                 </PrivateRoute>
               }
