@@ -4,11 +4,18 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { logout } from "../../actions/auth";
 
 const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const authLinks = (
     <ul>
+      <li>
+        <Link to="/dashboard">
+          <FontAwesomeIcon icon={faUser} />{" "}
+          <span className="hide-sm">Dashboard</span>
+        </Link>
+      </li>
       <li>
         <Link to="/" onClick={logout}>
           <FontAwesomeIcon icon={faRightFromBracket} />{" "}

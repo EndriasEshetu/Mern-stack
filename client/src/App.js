@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
-import { Landing } from "./components/layout/Landing";
+import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Alert from "./components/layout/Alert";
@@ -48,7 +48,17 @@ const App = () => {
                 </section>
               }
             />
-            <PrivateRoute path="/dashboard" component={Dashboard} />
+            <Route
+              path="/dashboard"
+              element={
+                <PrivateRoute>
+                  <section className="container">
+                    <Alert />
+                    <Dashboard />
+                  </section>
+                </PrivateRoute>
+              }
+            />
           </Routes>
         </Fragment>
       </Router>

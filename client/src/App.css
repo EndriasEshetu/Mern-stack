@@ -513,9 +513,12 @@ button {
 
   /* Navbar */
   .navbar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: block;
+    text-align: center;
+  }
+
+  .navbar h1 {
+    margin-bottom: 1rem;
   }
 
   .navbar ul {
