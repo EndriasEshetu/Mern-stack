@@ -1,8 +1,8 @@
 import {
   GET_PROFILE,
   PROFILE_ERROR,
-  CLEAR_PROFILE,
   UPDATE_PROFILE,
+  CLEAR_PROFILE,
 } from "../actions/types";
 
 const initialState = {
