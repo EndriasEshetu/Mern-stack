@@ -1,7 +1,8 @@
-import React, { Fragment, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { createProfile } from "../../actions/profile";
+import React, { Fragment, useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { createProfile, getCurrentProfile } from "../../actions/profile";
 import {
   FaUser,
   FaTwitter,
@@ -11,8 +12,11 @@ import {
   FaInstagram,
 } from "react-icons/fa";
 
-const CreateProfile = () => {
-  const dispatch = useDispatch();
+const EditProfile = ({
+  profile: { profile, loading },
+  createProfile,
+  getCurrentProfile,
+}) => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -31,6 +35,27 @@ const CreateProfile = () => {
   });
 
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
+  useEffect(() => {
+    getCurrentProfile();
+  }, [getCurrentProfile]);
+
+  useEffect(() => {
+    setFormData({
+      company: loading || !profile?.company ? "" : profile.company,
+      website: loading || !profile?.website ? "" : profile.website,
+      location: loading || !profile?.location ? "" : profile.location,
+      status: loading || !profile?.status ? "" : profile.status,
+      skills: loading || !profile?.skills ? "" : profile.skills.join(","),
+      githubusername:
+        loading || !profile?.githubusername ? "" : profile.githubusername,
+      bio: loading || !profile?.bio ? "" : profile.bio,
+      twitter: loading || !profile?.twitter ? "" : profile.twitter,
+      facebook: loading || !profile?.facebook ? "" : profile.facebook,
+      linkedin: loading ? "" : profile?.linkedin || profile?.linkedIn || "",
+      youtube: loading || !profile?.youtube ? "" : profile.youtube,
+      instagram: loading || !profile?.instagram ? "" : profile.instagram,
+    });
+  }, [loading, profile]);
 
   const {
     company,
@@ -58,7 +83,7 @@ const CreateProfile = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(createProfile(formData, navigate));
+    createProfile(formData, navigate, true);
   };
   return (
     <Fragment>
@@ -241,12 +266,24 @@ const CreateProfile = () => {
           </Fragment>
         )}
         <input type="submit" className="btn btn-primary my-1" />
-        <a className="btn btn-light my-1" href="dashboard.html">
+        <Link className="btn btn-light my-1" to="/dashboard">
           Go Back
-        </a>
+        </Link>
       </form>
     </Fragment>
   );
 };
 
-export default CreateProfile;
+EditProfile.propTypes = {
+  createProfile: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  profile: state.profile,
+});
+
+export default connect(mapStateToProps, { createProfile, getCurrentProfile })(
+  EditProfile,
+);
