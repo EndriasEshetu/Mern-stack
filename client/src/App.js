@@ -8,6 +8,7 @@ import Alert from "./components/layout/Alert";
 import Dashboard from "./components/dashboard/Dashboard";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import CreateProfile from "./components/profile-forms/CreateProfile";
+import Profiles from "./components/profiles/Profiles";
 import EditProfile from "./components/profile-forms/EditProfile";
 import AddExperience from "./components/profile-forms/AddExperience";
 import AddEducation from "./components/profile-forms/AddEducation";
@@ -49,6 +50,15 @@ const App = () => {
                 <section className="container">
                   <Alert />
                   <Login />
+                </section>
+              }
+            />
+            <Route
+              path="/profiles"
+              element={
+                <section className="container">
+                  <Alert />
+                  <Profiles />
                 </section>
               }
             />
