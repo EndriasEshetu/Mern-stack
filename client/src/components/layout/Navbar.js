@@ -20,7 +20,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
         </Link>
       </li>
       <li>
-        <Link to="/" onClick={logout}>
+        <Link to="/login" onClick={logout}>
           <FontAwesomeIcon icon={faRightFromBracket} />{" "}
           <span className="hide-sm">Logout</span>
         </Link>
