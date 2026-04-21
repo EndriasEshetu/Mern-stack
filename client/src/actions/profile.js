@@ -73,7 +73,14 @@ export const getProfileById = (userId) => async (dispatch) => {
 // Get GitHub repos
 export const getGithubRepos = (username) => async (dispatch) => {
   try {
-    const res = await axios.get(`/api/profile/github/${username}`);
+    const normalizedUsername = (username || "")
+      .replace(/^https?:\/\/github\.com\//i, "")
+      .replace(/\/$/, "")
+      .split("/")[0];
+
+    const res = await axios.get(
+      `/api/profile/github/${encodeURIComponent(normalizedUsername)}`,
+    );
     dispatch({
       type: GET_REPOS,
       payload: res.data,
