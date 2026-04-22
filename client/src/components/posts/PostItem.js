@@ -18,6 +18,8 @@ const PostItem = ({
   deletePost,
   post: { _id, text, name, avatar, user, likes, comments, date },
 }) => {
+  const authUserId = auth.user?._id || auth.user?.id || auth.user?.user?._id;
+
   return (
     <div className="post bg-white p-1 my-1">
       <div>
@@ -53,7 +55,7 @@ const PostItem = ({
             <span className="comment-count">{comments.length}</span>
           )}
         </Link>
-        {!auth.loading && auth.user && user === auth.user._id && (
+        {!auth.loading && authUserId && user === authUserId && (
           <button
             type="button"
             className="btn btn-danger"

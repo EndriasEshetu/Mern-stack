@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Spinner from "../layout/Spinner";
 import PostItem from "./PostItem";
+import PostForm from "./PostForm";
 import { getPosts } from "../../actions/post";
 
 const Posts = ({ getPosts, post: { posts, loading } }) => {
@@ -17,11 +18,13 @@ const Posts = ({ getPosts, post: { posts, loading } }) => {
       <h1 className="large text-primary">Posts</h1>
       <p className="lead">Welcome to the community</p>
 
-      {/* PostForm */}
+      <PostForm />
       <div className="posts">
-        {posts.map((post) => (
-          <PostItem key={post._id} post={post} />
-        ))}
+        {posts.length > 0 ? (
+          posts.map((post) => <PostItem key={post._id} post={post} />)
+        ) : (
+          <p>No posts yet. Be the first to share something.</p>
+        )}
       </div>
     </Fragment>
   );
