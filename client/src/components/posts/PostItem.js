@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -17,6 +17,7 @@ const PostItem = ({
   removeLike,
   deletePost,
   post: { _id, text, name, avatar, user, likes, comments, date },
+  showActions,
 }) => {
   const authUserId = auth.user?._id || auth.user?.id || auth.user?.user?._id;
 
@@ -34,39 +35,47 @@ const PostItem = ({
         <p className="post-date">
           Posted on {moment(date).format("YYYY/MM/DD")}
         </p>
-        <button
-          type="button"
-          className="btn btn-light"
-          onClick={() => addLike(_id)}
-        >
-          <FontAwesomeIcon icon={faThumbsUp} />{" "}
-          {likes.length > 0 && <span>{likes.length}</span>}
-        </button>
-        <button
-          type="button"
-          className="btn btn-light"
-          onClick={() => removeLike(_id)}
-        >
-          <FontAwesomeIcon icon={faThumbsDown} />
-        </button>
-        <Link to={`/posts/${_id}`} className="btn btn-primary">
-          Discussion{" "}
-          {comments.length > 0 && (
-            <span className="comment-count">{comments.length}</span>
-          )}
-        </Link>
-        {!auth.loading && authUserId && user === authUserId && (
-          <button
-            type="button"
-            className="btn btn-danger"
-            onClick={() => deletePost(_id)}
-          >
-            <FontAwesomeIcon icon={faTimes} />
-          </button>
+        {showActions && (
+          <Fragment>
+            <button
+              type="button"
+              className="btn btn-light"
+              onClick={() => addLike(_id)}
+            >
+              <FontAwesomeIcon icon={faThumbsUp} />{" "}
+              {likes.length > 0 && <span>{likes.length}</span>}
+            </button>
+            <button
+              type="button"
+              className="btn btn-light"
+              onClick={() => removeLike(_id)}
+            >
+              <FontAwesomeIcon icon={faThumbsDown} />
+            </button>
+            <Link to={`/posts/${_id}`} className="btn btn-primary">
+              Discussion{" "}
+              {comments.length > 0 && (
+                <span className="comment-count">{comments.length}</span>
+              )}
+            </Link>
+            {!auth.loading && authUserId && user === authUserId && (
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={() => deletePost(_id)}
+              >
+                <FontAwesomeIcon icon={faTimes} />
+              </button>
+            )}
+          </Fragment>
         )}
       </div>
     </div>
   );
+};
+
+PostItem.defaultProps = {
+  showActions: true,
 };
 
 PostItem.propTypes = {
