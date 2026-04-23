@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { getPost } from "../../actions/post";
 import PostItem from "../posts/PostItem";
+import CommentForm from "../post/CommentForm";
 import Spinner from "../layout/Spinner";
 
 const Post = ({ getPost, post: { post, loading } }) => {
@@ -14,16 +15,15 @@ const Post = ({ getPost, post: { post, loading } }) => {
     getPost(id);
   }, [getPost, id]);
 
-  return (
+  return loading || post === null ? (
+    <Spinner />
+  ) : (
     <Fragment>
       <Link to="/posts" className="btn btn-light">
         Back To Posts
       </Link>
-      {loading || post === null ? (
-        <Spinner />
-      ) : (
-        <PostItem post={post} showActions={false} />
-      )}
+      <PostItem post={post} showActions={false} />
+      <CommentForm postId={post._id} />
     </Fragment>
   );
 };
