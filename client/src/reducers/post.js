@@ -65,16 +65,16 @@ function post(state = initialState, action) {
     case ADD_COMMENT:
       return {
         ...state,
-        posts: { ...state.posts, comments: payload },
+        post: { ...state.post, comments: payload },
         loading: false,
       };
 
     case REMOVE_COMMENT:
       return {
         ...state,
-        posts: {
-          ...state.posts,
-          comments: state.posts.comments.filter(
+        post: {
+          ...state.post,
+          comments: state.post.comments.filter(
             (comment) => comment._id !== payload,
           ),
         },

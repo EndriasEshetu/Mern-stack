@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addComment } from "../../actions/post";
 
-const CommentForm = ({ addComment }) => {
+const CommentForm = ({ postId, addComment }) => {
   const [text, setText] = useState("");
   const onSubmit = (e) => {
     e.preventDefault();
-    addComment({ text });
+    addComment(postId, { text });
     setText("");
   };
 
@@ -33,6 +33,7 @@ const CommentForm = ({ addComment }) => {
 };
 
 CommentForm.propTypes = {
+  postId: PropTypes.string.isRequired,
   addComment: PropTypes.func.isRequired,
 };
 
