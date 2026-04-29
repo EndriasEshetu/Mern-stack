@@ -5,6 +5,12 @@ const db = getConfigValue("mongoURI", "MONGO_URI");
 
 const connectDB = async () => {
   try {
+    if (!db) {
+      throw new Error(
+        "MongoDB connection URI is missing. Set MONGO_URI in Render or provide mongoURI in config.",
+      );
+    }
+
     const connectionOptions = {
       useNewUrlParser: true,
       useCreateIndex: true,
