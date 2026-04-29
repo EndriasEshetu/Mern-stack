@@ -2,6 +2,8 @@
 
 A full-stack developer social platform built with the **MERN stack** where users can create profiles, share posts, and interact through likes and comments.
 
+**Live Demo**: [https://endrias-mern-stack.onrender.com/](https://endrias-mern-stack.onrender.com/)
+
 ---
 
 ## 🌐 Overview
@@ -124,7 +126,7 @@ Mern-stack/
 
 ### Auth
 
-```
+```text
 POST   /api/users        → Register
 POST   /api/auth         → Login
 GET    /api/auth         → Current user
@@ -132,7 +134,7 @@ GET    /api/auth         → Current user
 
 ### Profile
 
-```
+```text
 GET    /api/profile
 GET    /api/profile/me
 POST   /api/profile
@@ -147,7 +149,7 @@ GET    /api/profile/github/:username
 
 ### Posts
 
-```
+```text
 POST   /api/posts
 GET    /api/posts
 GET    /api/posts/:id
