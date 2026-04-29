@@ -49,7 +49,12 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
     <nav className="navbar bg-dark">
       <h1>
         <Link to="/">
-          <span aria-hidden="true">&lt;/&gt;</span> DevConnector
+          <img
+            className="navbar-logo"
+            src={process.env.PUBLIC_URL + "/elogo.png"}
+            alt="Developer Media logo"
+          />
+          Developer Media
         </Link>
       </h1>
       {!loading && (

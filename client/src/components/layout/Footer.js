@@ -18,7 +18,7 @@ function Footer() {
         </p>
 
         <p>
-          &copy; {new Date().getFullYear()} Mortgage Calculator. All rights
+          &copy; {new Date().getFullYear()} Developer Media. All rights
           reserved.
         </p>
 
