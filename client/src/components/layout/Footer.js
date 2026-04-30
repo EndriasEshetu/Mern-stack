@@ -24,7 +24,7 @@ function Footer() {
 
         <div className="footer-links">
           <a
-            href="https://github.com/EndriasEshetu/Mortgage-calculator-web-app"
+            href="https://github.com/EndriasEshetu/Mern-stack"
             target="_blank"
             rel="noreferrer"
           >
